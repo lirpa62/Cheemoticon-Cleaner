@@ -8,7 +8,7 @@ if (!window.__cheemo_initialized__) {
       // 다시 켜질 때: 루트 감시 + 필터 바인딩 보장
       ensureChatRootObserver();
       const root = document.querySelector(
-        "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]"
+        "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]",
       );
       if (root) installChatEmojiFilter(root);
 
@@ -39,12 +39,12 @@ if (!window.__cheemo_initialized__) {
           window.__cheemo_chat_root.removeEventListener(
             "click",
             window.__cheemo_chat_click_listener__,
-            true
+            true,
           );
         }
       } catch {}
       const root = document.querySelector(
-        "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]"
+        "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]",
       );
       if (root) {
         root.querySelectorAll("img").forEach((img) => {
@@ -52,7 +52,7 @@ if (!window.__cheemo_initialized__) {
         });
         root
           .querySelectorAll(
-            "[class*=live_chatting_message_button__], [class*=live_chatting_scroll_message__]"
+            "[class*=live_chatting_message_button__], [class*=live_chatting_scroll_message__]",
           )
           .forEach((btn) => {
             btn.style.display = "";
@@ -98,7 +98,7 @@ if (!window.__cheemo_initialized__) {
 
         // 'OFF' 또는 '설치' 배너가 혹시 남아있다면 제거
         const banner = document.getElementById(
-          "chzzk-cheemo-ext-update-banner"
+          "chzzk-cheemo-ext-update-banner",
         );
         if (banner) banner.remove();
 
@@ -184,7 +184,7 @@ function computeColumnsAndGap(
     minGap = 4, // 최소 간격
     maxGap = 20, // 최대 간격(과도하게 벌어짐 방지)
     paddingAware = true,
-  } = {}
+  } = {},
 ) {
   if (!container) return { n: 1, gap: minGap };
 
@@ -333,7 +333,7 @@ window.EMOJI_BLOCKSET = window.EMOJI_BLOCKSET ?? new Set();
 
 async function loadEmojiBlockset() {
   const { chzzkEmojiBlocklist = [] } = await safeLocalGet(
-    "chzzkEmojiBlocklist"
+    "chzzkEmojiBlocklist",
   );
   EMOJI_BLOCKSET = new Set(chzzkEmojiBlocklist);
 }
@@ -344,7 +344,7 @@ function updateEmojiVisibility(imgEl) {
   const blocked = EMOJI_BLOCKSET.has(key);
 
   const btn = imgEl.closest(
-    "[class*=live_chatting_message_button__], [class*=live_chatting_scroll_message__]"
+    "[class*=live_chatting_message_button__], [class*=live_chatting_scroll_message__]",
   );
   if (btn) {
     // 버튼 단위로 숨김/복원
@@ -370,7 +370,7 @@ function unlockDisabledButtons(baseNode) {
   if (baseNode.querySelectorAll) {
     baseNode
       .querySelectorAll(
-        "button[disabled][class*='live_chatting_message_button__']"
+        "button[disabled][class*='live_chatting_message_button__']",
       )
       .forEach((btn) => {
         btn.removeAttribute("disabled");
@@ -389,7 +389,7 @@ function installChatEmojiFilter(root) {
     root.removeEventListener(
       "click",
       window.__cheemo_chat_click_listener__,
-      true
+      true,
     );
   }
   if (window.__cheemo_chat_mo__) {
@@ -405,7 +405,7 @@ function installChatEmojiFilter(root) {
     if (!(target instanceof HTMLImageElement)) return;
     if (
       !target.closest(
-        "[class*=live_chatting_message_button__],[class*=live_chatting_scroll_message__]"
+        "[class*=live_chatting_message_button__],[class*=live_chatting_scroll_message__]",
       )
     )
       return;
@@ -426,7 +426,7 @@ function installChatEmojiFilter(root) {
   // 초기 스캔
   root
     .querySelectorAll(
-      "[class*=live_chatting_message_text__] img, [class*=live_chatting_scroll_message__] img"
+      "[class*=live_chatting_message_text__] img, [class*=live_chatting_scroll_message__] img",
     )
     .forEach(updateEmojiVisibility);
 
@@ -439,14 +439,14 @@ function installChatEmojiFilter(root) {
 
         if (
           node.matches(
-            "[class*=live_chatting_message_text__], [class*=live_chatting_message_button__], [class*=live_chatting_scroll_message__]"
+            "[class*=live_chatting_message_text__], [class*=live_chatting_message_button__], [class*=live_chatting_scroll_message__]",
           )
         ) {
           node.querySelectorAll("img").forEach(updateEmojiVisibility);
         } else {
           node
             .querySelectorAll?.(
-              "[class*=live_chatting_message_text__] img, [class*=live_chatting_message_button__] img, [class*=live_chatting_scroll_message__] img"
+              "[class*=live_chatting_message_text__] img, [class*=live_chatting_message_button__] img, [class*=live_chatting_scroll_message__] img",
             )
             .forEach(updateEmojiVisibility);
         }
@@ -482,7 +482,7 @@ function installChatEmojiFilter(root) {
       document.removeEventListener("keydown", this.handleInputShortcut);
       document.body.removeEventListener(
         "mousedown",
-        this.handleResizeMouseDown
+        this.handleResizeMouseDown,
       );
     }
 
@@ -545,9 +545,8 @@ function installChatEmojiFilter(root) {
       await this.injectScript("inject.js");
 
       // storage에서 설정 값을 가져와 inject.js로 전송
-      const { chzzkRecentMax = 20 } = await chrome.storage.local.get(
-        "chzzkRecentMax"
-      );
+      const { chzzkRecentMax = 20 } =
+        await chrome.storage.local.get("chzzkRecentMax");
       this.postMaxCountToPage(chzzkRecentMax);
       this.currentMax = chzzkRecentMax;
       // storage 값이 변경될 때마다 inject.js에 다시 알려주기 위한 리스너
@@ -589,11 +588,11 @@ function installChatEmojiFilter(root) {
           EMOJI_BLOCKSET = new Set(changes.chzzkEmojiBlocklist.newValue || []);
           // 반영: 현재 표시 중인 img들 다시 스캔(간단히 루트 재스캔)
           const root = document.querySelector(
-            "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]"
+            "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]",
           );
           root
             ?.querySelectorAll(
-              "[class*=live_chatting_message_text__] img, [class*=live_chatting_scroll_message__] img"
+              "[class*=live_chatting_message_text__] img, [class*=live_chatting_scroll_message__] img",
             )
             .forEach(updateEmojiVisibility);
         }
@@ -634,7 +633,7 @@ function installChatEmojiFilter(root) {
           type: "CHZZK_EMOTICON_MAX_COUNT_UPDATE",
           maxCount: maxCount,
         },
-        "*"
+        "*",
       );
     }
 
@@ -656,7 +655,7 @@ function installChatEmojiFilter(root) {
 
       // 순서를 변경할 대상 아이템(id를 가진 버튼)들이 실제로 DOM에 존재하는지 확인
       const itemsToReorder = container.querySelectorAll(
-        "[class*='emoticon_flicking_item__'] button[id]"
+        "[class*='emoticon_flicking_item__'] button[id]",
       );
       if (itemsToReorder.length === 0) {
         // 아직 이모티콘 팩 아이템들이 렌더링되지 않았으므로,
@@ -686,16 +685,22 @@ function installChatEmojiFilter(root) {
         });
 
       // 4. 저장된 ID 순서(desiredIdOrder)에 따라 이모티콘 아이템을 컨테이너에 다시 append
-      // appendChild는 기존에 있던 요소를 맨 뒤로 '이동'
-      desiredIdOrder
-        .filter((buttonId) => itemMap.has(buttonId))
-        .forEach((buttonId) => {
+      // [Step 1] 저장된 순서에 있는 이모티콘들을 먼저 맨 뒤로 이동(배치)시킴
+      desiredIdOrder.forEach((buttonId) => {
+        if (itemMap.has(buttonId)) {
           const itemToMove = itemMap.get(buttonId);
-          if (itemToMove) {
-            // 부모 컨테이너에 다시 추가하여 순서를 변경 (맨 뒤로 이동)
-            container.appendChild(itemToMove);
-          }
-        });
+          container.appendChild(itemToMove);
+
+          // 이동시킨 아이템은 Map에서 제거 (나중에 새 이모티콘만 남기기 위해)
+          itemMap.delete(buttonId);
+        }
+      });
+
+      // [Step 2] Map에 남아있는 아이템(새로 추가된 구독 이모티콘 등)을 그 뒤에 순서대로 붙임
+      // 이 과정을 통해 새 이모티콘들이 정렬된 이모티콘 '뒤'로 이동하게 됨 (팝업과 동일한 순서)
+      itemMap.forEach((itemDiv) => {
+        container.appendChild(itemDiv);
+      });
 
       // 모든 작업이 끝난 후, 컨테이너에 깃발을 세워 다음 호출 시에는
       // 작업이 실행되지 않도록 함
@@ -781,7 +786,7 @@ function installChatEmojiFilter(root) {
       // '리사이즈 중'이 아닐 때만 저장된 높이를 적용하도록 수정
       if (!this.isResizing) {
         const popupContainer = container.closest(
-          '#aside-chatting [class*="popup_container"]'
+          '#aside-chatting [class*="popup_container"]',
         );
         if (popupContainer) {
           // 저장된 높이를 적용하기 직전에 부드러운 효과를 활성화
@@ -830,7 +835,7 @@ function installChatEmojiFilter(root) {
 
       const emoticonsKey = `livechat-emoticon#${userStatusIdHash}`;
       const recentEmoticons = JSON.parse(
-        localStorage.getItem(emoticonsKey) || "[]"
+        localStorage.getItem(emoticonsKey) || "[]",
       );
       if (recentEmoticons.length === 0) return false;
 
@@ -847,7 +852,7 @@ function installChatEmojiFilter(root) {
                 }
               });
             }
-          }
+          },
         );
         return ids;
       };
@@ -867,7 +872,7 @@ function installChatEmojiFilter(root) {
 
         // 현재 로컬 목록 중 "유효하지 않다고 판단된" 이모티콘 식별
         let invalidEmoticons = recentEmoticons.filter(
-          (e) => !availableEmojiIds.has(e.emojiId)
+          (e) => !availableEmojiIds.has(e.emojiId),
         );
 
         // 2차 시도: 만약 지워야 할 이모티콘이 있다면, 캐시가 낡아서 그럴 수 있으니 강제 갱신 요청
@@ -887,7 +892,7 @@ function installChatEmojiFilter(root) {
 
         // 최종 필터링: 최신 데이터 기준으로 다시 확인
         const cleanedEmoticons = recentEmoticons.filter((e) =>
-          availableEmojiIds.has(e.emojiId)
+          availableEmojiIds.has(e.emojiId),
         );
 
         // 변경사항이 있을 때만 저장
@@ -953,7 +958,7 @@ function installChatEmojiFilter(root) {
         const deleteButton = this.createDeleteButton(
           emojiId,
           emoticonsKey,
-          item
+          item,
         );
         item.appendChild(deleteButton);
       });
@@ -999,7 +1004,7 @@ function installChatEmojiFilter(root) {
 
       const emoticonCount = list.querySelectorAll("li").length;
       const messageElement = container.querySelector(
-        "#recent-emoticon-empty-msg"
+        "#recent-emoticon-empty-msg",
       );
 
       // 이모티콘이 하나도 없을 경우
@@ -1059,7 +1064,7 @@ function installChatEmojiFilter(root) {
         lockButton.addEventListener("click", () => this.toggleDeletionLock());
 
         const clearAllButton = wrapper.querySelector(
-          "#clear-all-emoticons-btn"
+          "#clear-all-emoticons-btn",
         );
         wrapper.insertBefore(lockButton, clearAllButton);
       }
@@ -1159,10 +1164,10 @@ function installChatEmojiFilter(root) {
       event.stopPropagation();
       try {
         const currentEmoticons = JSON.parse(
-          localStorage.getItem(emoticonsKey) || "[]"
+          localStorage.getItem(emoticonsKey) || "[]",
         );
         const updatedEmoticons = currentEmoticons.filter(
-          (emoji) => emoji.emojiId !== emojiId
+          (emoji) => emoji.emojiId !== emojiId,
         );
         localStorage.setItem(emoticonsKey, JSON.stringify(updatedEmoticons));
         item.remove();
@@ -1185,13 +1190,13 @@ function installChatEmojiFilter(root) {
     handleResizeMouseDown(e) {
       // 클릭된 대상이 팝업 헤더가 아니면 무시
       const handle = e.target.closest(
-        '#aside-chatting [class*="popup_header"]'
+        '#aside-chatting [class*="popup_header"]',
       );
       if (!handle) return;
 
       // 리사이즈할 대상인 팝업 컨테이너를 찾음
       const popupContainer = handle.closest(
-        '#aside-chatting [class*="popup_container"]'
+        '#aside-chatting [class*="popup_container"]',
       );
       if (!popupContainer) return;
 
@@ -1295,7 +1300,7 @@ function installChatEmojiFilter(root) {
 
       // 3. 이모티콘 버튼을 찾음
       const emoticonButton = document.querySelector(
-        '#aside-chatting [class*="button_container"][aria-haspopup="true"]'
+        '#aside-chatting [class*="button_container"][aria-haspopup="true"]',
       );
 
       // 4. 버튼이 존재하면 클릭 이벤트를 실행
@@ -1320,7 +1325,7 @@ function installChatEmojiFilter(root) {
       }
 
       const emoticonButton = document.querySelector(
-        '#aside-chatting [class*="button_container"][aria-haspopup="true"]'
+        '#aside-chatting [class*="button_container"][aria-haspopup="true"]',
       );
       if (!emoticonButton) {
         return;
@@ -1371,7 +1376,7 @@ function installChatEmojiFilter(root) {
       const isEmpty = target.textContent.trim() === "";
 
       const emoticonButton = document.querySelector(
-        '#aside-chatting [class*="button_container"][aria-haspopup="true"]'
+        '#aside-chatting [class*="button_container"][aria-haspopup="true"]',
       );
 
       // case 1: 비어있는 채팅 입력창에서 ESC를 누른 경우
@@ -1418,7 +1423,7 @@ function installChatEmojiFilter(root) {
       }
 
       const textarea = document.querySelector(
-        '#aside-chatting textarea[class*="live_chatting_input_input"]'
+        '#aside-chatting textarea[class*="live_chatting_input_input"]',
       );
 
       if (!textarea || textarea.placeholder.includes("(J)")) {
@@ -1466,7 +1471,7 @@ function installChatEmojiFilter(root) {
       }
 
       const textarea = document.querySelector(
-        '#aside-chatting textarea[class*="live_chatting_input_input"]'
+        '#aside-chatting textarea[class*="live_chatting_input_input"]',
       );
 
       if (!textarea) {
@@ -1501,7 +1506,7 @@ window.myEmoticonExtensionInstance = window.emoticonExtension;
   setEnabled(!isPaused); // 시작 시 ON/OFF 반영
 
   const root = document.querySelector(
-    "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]"
+    "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]",
   );
   if (root) installChatEmojiFilter(root); // 초기 페이지에서도 즉시 바인딩
 })();
@@ -1511,7 +1516,7 @@ function ensureChatRootObserver() {
 
   const rebind = () => {
     const root = document.querySelector(
-      "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]"
+      "[class*=live_chatting_list_container__],[class*=vod_chatting_list__]",
     );
     if (!root || root === __cheemo_chat_root) return;
 
@@ -1521,7 +1526,7 @@ function ensureChatRootObserver() {
         __cheemo_chat_root.removeEventListener(
           "click",
           window.__cheemo_chat_click_listener__,
-          true
+          true,
         );
       }
       if (window.__cheemo_chat_mo__) {
@@ -1539,7 +1544,7 @@ function ensureChatRootObserver() {
     // 블록셋이 이미 로드되어 있다면 즉시 한 번 더 전체 적용
     __cheemo_chat_root
       .querySelectorAll(
-        "[class*=live_chatting_message_text__] img, [class*=live_chatting_scroll_message__] img"
+        "[class*=live_chatting_message_text__] img, [class*=live_chatting_scroll_message__] img",
       )
       .forEach(updateEmojiVisibility);
   };
@@ -1584,7 +1589,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       await emoticonExtension.injectScript(
         "inject.js",
         /*force*/ true,
-        request.version
+        request.version,
       );
       sendResponse({ ok: true, reinjected: true, v: request.version });
     })();
