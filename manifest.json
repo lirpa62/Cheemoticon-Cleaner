@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "치모티콘 정리 - 치지직 이모티콘 정리",
-  "version": "1.6.3",
-  "description": "치지직(CHZZK) 채팅창의 '최근 사용한 이모티콘' 목록에서 이모티콘들을 정리할 수 있습니다.",
+  "version": "1.6.4",
+  "description": "치지직 채팅창의 '최근 사용한 이모티콘' 목록에서 이모티콘들을 정리할 수 있습니다.",
   "icons": {
     "16": "icon_16.png",
     "48": "icon_48.png",
